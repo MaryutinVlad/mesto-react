@@ -2,7 +2,7 @@ import React from "react";
 import api from "../utils/api";
 import Card from "./Card";
 
-function Main(props) {
+function Main({onEditAvatar, onEditProfile, onAddPlace, handleCardClick}) {
 
     const [userName, setUserName] = React.useState('');
     const [userDescription, setUserDescription] = React.useState('');
@@ -23,20 +23,20 @@ function Main(props) {
     return (
       <main className="content">
         <section className="profile">
-          <button className="profile__edit-avatar" onClick={props.onEditAvatar}>
+          <button className="profile__edit-avatar" onClick={onEditAvatar}>
             <img className="profile__avatar" src={userAvatar} alt="Жак-Ив Кусто"/>
           </button>  
           <div className="profile__info">
             <h1 className="profile__name">{userName}</h1>
-            <button className="profile__edit-button" onClick={props.onEditProfile}></button>
+            <button className="profile__edit-button" onClick={onEditProfile}></button>
             <p className="profile__description">{userDescription}</p>
           </div>
-          <button className="profile__add-button" onClick={props.onAddPlace}></button>
+          <button className="profile__add-button" onClick={onAddPlace}></button>
         </section>
 
         <section className="elements">
           {cards.map(item => (
-            <Card key={item._id} card={item} onCardClick={props.handleCardClick}/>
+            <Card key={item._id} cardData={item} onCardClick={handleCardClick}/>
           ))}
         </section>
       </main>

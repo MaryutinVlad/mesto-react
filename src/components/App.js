@@ -10,7 +10,7 @@ function App() {
   const [isEditPopupOpen, setOpenEditPopup] = React.useState(false);
   const [isAvatarPopupOpen, setOpenAvatarPopup] = React.useState(false);
   const [isAddPopupOpen, setOpenAddPopup] = React.useState(false);
-  const [selectedCard, setSelected] = React.useState(false);
+  const [selectedCard, setSelected] = React.useState(null);
 
   function handleEditAvatarClick() {
     setOpenAvatarPopup(!isAvatarPopupOpen);
@@ -28,7 +28,7 @@ function App() {
     setOpenAvatarPopup(false);
     setOpenEditPopup(false);
     setOpenAddPopup(false);
-    setSelected(false);
+    setSelected(null);
   }
 
   function handleCardClick(card) {
@@ -37,13 +37,14 @@ function App() {
 
   return (
     <div className="page">
+      
       <Header/>
 
       <Main
         onEditAvatar={handleEditAvatarClick}
         onEditProfile={handleEditProfileClick}
         onAddPlace={handleAddPlaceClick}
-        handleCardClick = {handleCardClick}
+        handleCardClick={handleCardClick}
       />
 
       <Footer/>
@@ -51,8 +52,9 @@ function App() {
       <PopupWithForm
         name='edit'
         title='Редактировать профиль'
-        isOpen = {isEditPopupOpen ? 'popup_opened' : ''}
-        onClose = {closeAllPopups}
+        isOpen={isEditPopupOpen && 'popup_opened'}
+        onClose={closeAllPopups}
+        buttonText='Сохранить'
       >
         <input className="form__input-field form__input-field_type_name" id="name-input" autoComplete="off"
          type="text" placeholder="Имя" required minLength="2" maxLength="40" name="name"/>
@@ -67,8 +69,9 @@ function App() {
       <PopupWithForm
         name='add'
         title='Новое место'
-        isOpen = {isAddPopupOpen ? 'popup_opened' : ''}
-        onClose = {closeAllPopups}
+        isOpen={isAddPopupOpen && 'popup_opened'}
+        onClose={closeAllPopups}
+        buttonText='Сохранить'
       >
         <input className="form__input-field form__input-field_type_place-title" id="title-input"
          type="text" placeholder="Название" required minLength="2" maxLength="30" name="place"/>
@@ -80,13 +83,18 @@ function App() {
 
       </PopupWithForm>
 
-      <PopupWithForm name='confirm' title='Вы уверены?'/>
+      <PopupWithForm
+        name='confirm'
+        title='Вы уверены?'
+        buttonText='Да'
+      />
 
       <PopupWithForm
         name='avatar'
         title='Обновить аватар'
-        isOpen = {isAvatarPopupOpen ? 'popup_opened' : ''}
-        onClose = {closeAllPopups}
+        isOpen={isAvatarPopupOpen && 'popup_opened'}
+        onClose={closeAllPopups}
+        buttonText='Сохранить'
       >
         <input className="form__input-field form__input-field_type_link" type="url" 
          id="avatar-input" placeholder="Ссылка на картинку" name="avatar" required/>
@@ -95,9 +103,9 @@ function App() {
       </PopupWithForm>
 
       <ImagePopup
-        card={selectedCard}
-        isOpen = {selectedCard ? 'popup_opened' : ''}
-        onClose = {closeAllPopups}
+        cardData={selectedCard ? selectedCard : {}}
+        isOpen={selectedCard && 'popup_opened'}
+        onClose={closeAllPopups}
       />
 
     </div>
