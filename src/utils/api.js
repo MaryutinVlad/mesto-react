@@ -3,9 +3,9 @@ class Api {
         this._options = options;
     }
 
-    _request(way, method) {
+    _request(path, method) {
         this._options.method = method;
-        return fetch(way, this._options)
+        return fetch(path, this._options)
           .then(res => {
             if (res.ok) {
                 return res.json();
@@ -38,7 +38,7 @@ class Api {
         if (!avatar) {
             this._options.body = JSON.stringify({
                 name: data.name,
-                about: data.description
+                about: data.about
             })
             return this._request('https://mesto.nomoreparties.co/v1/cohort-38/users/me', 'PATCH');
         }
@@ -49,7 +49,7 @@ class Api {
     }
 
     toggleLike(cardId, action) {
-        return this._request(`https://mesto.nomoreparties.co/v1/cohort-38/cards/${cardId}/likes`, action); 
+        return this._request(`https://mesto.nomoreparties.co/v1/cohort-38/cards/${cardId}/likes`, action ? 'DELETE' : 'PUT');
     }
 
     getAppInfo() {
