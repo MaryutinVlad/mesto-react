@@ -1,5 +1,4 @@
 import React from "react";
-import { CurrentCardsContext } from "../contexts/CurrentCardsContext";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import Card from "./Card";
 
@@ -23,14 +22,12 @@ function Main({onEditAvatar, onEditProfile, onAddPlace, handleCardClick, cards, 
           <button className="profile__add-button" onClick={onAddPlace}></button>
         </section>
 
-        <CurrentCardsContext.Provider value={cards}>
           <section className="elements">
             {cards.map(item => (
               <Card key={item._id} cardData={item} onCardClick={handleCardClick}
               onCardLike={onCardLike} onCardDelete={onCardDelete}/>
             ))}
           </section>
-        </CurrentCardsContext.Provider>
 
       </main>
       

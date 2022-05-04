@@ -20,15 +20,15 @@ function App() {
   const [cards, setCards] = React.useState([]);
 
   function handleEditAvatarClick() {
-    setOpenAvatarPopup(!isAvatarPopupOpen);
+    setOpenAvatarPopup(true);
   }
 
   function handleEditProfileClick() {
-    setOpenEditPopup(!isEditPopupOpen);
+    setOpenEditPopup(true);
   }
 
   function handleAddPlaceClick() {
-    setOpenAddPopup(!isAddPopupOpen);
+    setOpenAddPopup(true);
   }
 
   function closeAllPopups() {
@@ -45,15 +45,19 @@ function App() {
   function handleCardLike(card) {
     const isLiked = card.likes.some(like => like._id === currentUser._id);
 
-    api.toggleLike(card._id, isLiked).then(newCard => {
-      setCards(state => state.map(c => card._id === c._id ? newCard : c));
-    })
+    api.toggleLike(card._id, isLiked)
+      .then(newCard => {
+        setCards(state => state.map(c => card._id === c._id ? newCard : c));
+      })
+      .catch(err => console.log(err));
   }
 
   function handleCardDelete(card) {
-    api.deleteCard(card._id).then(() => {
-      setCards(state => state.filter(c => card._id !== c._id));
-    })
+    api.deleteCard(card._id)
+      .then(() => {
+        setCards(state => state.filter(c => card._id !== c._id));
+      })
+      .catch(err => console.log(err));
   }
 
   function handleAddPlaceSubmit(data) {
@@ -89,7 +93,7 @@ function App() {
           setUserData(userData);
       })
       .catch(err => console.log(err));
-    }, [currentUser.name, currentUser.about, currentUser.avatar]);
+    }, []);
 
     React.useEffect(() => {
       api.getInitialCards()
@@ -97,7 +101,7 @@ function App() {
           setCards([...cards]);
         })
         .catch(err => console.log(err));
-    }, [cards]);
+    }, []);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
