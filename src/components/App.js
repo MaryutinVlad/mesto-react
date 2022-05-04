@@ -135,7 +135,7 @@ function App() {
 
       <ImagePopup
         cardData={selectedCard ? selectedCard : {}}
-        isOpen={selectedCard && 'popup_opened'}
+        isOpen={selectedCard}
         onClose={closeAllPopups}
       />
 
